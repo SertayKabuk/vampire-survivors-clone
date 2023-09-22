@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -3924536727789847702}
   m_Layer: 0
   m_Name: Bat
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -165,4 +165,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 404f5f0284b8f604a94352afa0ccca90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2
+  enemyData: {fileID: 11400000, guid: 1a3647464c382d449b935253413cf119, type: 2}
