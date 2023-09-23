@@ -30,10 +30,17 @@ public class MeleeWeaponBehaviour : MonoBehaviour
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         //deal damage to enemy
-        if (collision.CompareTag("Enemy"))//move to tag enum
+        if (collision.CompareTag(Enums.Tags.Enemy.ToString()))
         {
             EnemyStats enemy = collision.GetComponent<EnemyStats>();
             enemy.TakeDamage(currentDamage);//allow modification to damage
+        }
+        else if (collision.CompareTag(Enums.Tags.Prop.ToString()))
+        {
+            if (collision.TryGetComponent<BreakableProps>(out var prop))
+            {
+                prop.TakeDamage(currentDamage);
+            }
         }
     }
 }

@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float moveSpeed;
     Rigidbody2D rigidBody2D;
+    public CharacterScriptableObject characterData;
 
     [HideInInspector]
     public Vector2 moveDirection;
@@ -60,6 +60,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move()
     {
-        rigidBody2D.velocity = new Vector2(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed);
+        rigidBody2D.velocity = new Vector2(moveDirection.x * characterData.MoveSpeed, moveDirection.y * characterData.MoveSpeed);
     }
 }
