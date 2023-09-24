@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float moveSpeed;
     Rigidbody2D rigidBody2D;
+    PlayerStats player;
 
     [HideInInspector]
     public Vector2 moveDirection;
@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rigidBody2D = GetComponent<Rigidbody2D>();
+        player = GetComponent<PlayerStats>();
         lastMovedVector = new Vector2 (1, 0f); //default direction, if player doesn't move weapon stay still
     }
 
@@ -60,6 +61,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move()
     {
-        rigidBody2D.velocity = new Vector2(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed);
+        rigidBody2D.velocity = new Vector2(moveDirection.x * player.currentMoveSpeed, moveDirection.y * player.currentMoveSpeed);
     }
 }

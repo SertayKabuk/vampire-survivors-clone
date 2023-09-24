@@ -10,7 +10,7 @@ public class KnifeControllerInstance : MonoBehaviour
         {
             if (_instance == null)
             {
-                _instance = FindObjectOfType<KnifeController>();
+                _instance = FindAnyObjectByType<KnifeController>();
             }
 
             return _instance;

@@ -1,11 +1,27 @@
+using Unity.VisualScripting;
 using UnityEngine;
 /// <summary>
 /// Base for projectile weapons
 /// </summary>
 public class ProjectileWeaponBehaviour : MonoBehaviour
 {
+    public WeaponScriptableObject weaponData;
     protected Vector3 direction;
     public float destroyAfterSeconds;
+
+    //Current stats
+    protected float currentDamage;
+    protected float currentSpeed;
+    protected float currentCooldownDuration;
+    protected float currentPierce;
+
+    private void Awake()
+    {
+        currentDamage = weaponData.Damage;
+        currentSpeed = weaponData.Speed;
+        currentCooldownDuration = weaponData.CooldownDuration;
+        currentPierce = weaponData.Pierce;
+    }
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -59,5 +75,33 @@ public class ProjectileWeaponBehaviour : MonoBehaviour
 
         transform.localScale = scale;
         transform.rotation = Quaternion.Euler(rotation);
+    }
+
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
+    {
+        //deal damage to enemy
+        if (collision.CompareTag(Enums.Tags.Enemy.ToString()))
+        {
+            EnemyStats enemy = collision.GetComponent<EnemyStats>();
+            enemy.TakeDamage(currentDamage);//allow modification to damage
+            ReducePierce();
+        }
+        else if (collision.CompareTag(Enums.Tags.Prop.ToString()))
+        {
+            if (collision.TryGetComponent<BreakableProps>(out var prop))
+            {
+                prop.TakeDamage(currentDamage);
+                ReducePierce();
+            }
+        }
+
+    }
+
+    private void ReducePierce()
+    {
+        currentPierce--;
+
+        if (currentPierce <= 0)
+            Destroy(gameObject);
     }
 }

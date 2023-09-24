@@ -8,12 +8,12 @@ public class ChunkTrigger : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        mapController = FindObjectOfType<MapController>();
+        mapController = FindAnyObjectByType<MapController>();
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag(Enums.Tags.Player.ToString()))
         {
             mapController.currnetChunk = targetMap;
         }
@@ -21,7 +21,7 @@ public class ChunkTrigger : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && mapController.currnetChunk == targetMap)
+        if (collision.CompareTag(Enums.Tags.Player.ToString()) && mapController.currnetChunk == targetMap)
         {
             mapController.currnetChunk = null;
         }

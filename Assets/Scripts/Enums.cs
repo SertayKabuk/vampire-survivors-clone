@@ -2,6 +2,14 @@ public class Enums
 {
     public enum AnimationParameters
     {
-        Move
+        Move,
+    }
+
+    public enum Tags
+    {
+        Player,
+        Enemy,
+        Collectible,
+        Prop,
     }
 }
