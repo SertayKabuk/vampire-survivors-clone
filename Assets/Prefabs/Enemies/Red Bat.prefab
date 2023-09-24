@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 5641281651726069112}
   - component: {fileID: -3924536727789847702}
   - component: {fileID: 5672075126046232993}
-  - component: {fileID: -7492821898490391564}
+  - component: {fileID: 149494725067428035}
   m_Layer: 0
-  m_Name: Bat
+  m_Name: Red Bat
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -79,7 +79,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: -757873017, guid: 3b1bd650ec561c6499469cef938b4d1b, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9716981, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -183,7 +183,7 @@ MonoBehaviour:
   - name: Blue gem
     itemPrefab: {fileID: 1618947657063825502, guid: b88737e3808bae24b9eea463114fdeeb, type: 3}
     dropRate: 50
---- !u!114 &-7492821898490391564
+--- !u!114 &149494725067428035
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -195,7 +195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 629f26b5d69421248a8f256814eb3886, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyData: {fileID: 11400000, guid: 1a3647464c382d449b935253413cf119, type: 2}
+  enemyData: {fileID: 11400000, guid: 1b31249a4ad42d447ba73c7615810d8e, type: 2}
   currentMoveSpeed: 0
   currentHealth: 0
   currentDamage: 0
