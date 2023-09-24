@@ -7,20 +7,21 @@ public class PlayerStats : MonoBehaviour
     public CharacterScriptableObject charaterData;
 
     //Current stats
-    float currentHealth;
-    float currentRecovery;
-    float currentMoveSpeed;
-    float currentMight;
-    float currentProjectileSpeed;
+    [HideInInspector]
+    public float currentHealth;
+    [HideInInspector]
+    public float currentRecovery;
+    [HideInInspector]
+    public float currentMoveSpeed;
+    [HideInInspector]
+    public float currentMight;
+    [HideInInspector]
+    public float currentProjectileSpeed;
+    [HideInInspector]
+    public float currentMagnet;
 
-    private void Awake()
-    {
-        currentHealth = charaterData.MaxHealth;
-        currentRecovery = charaterData.Recovery;
-        currentMoveSpeed = charaterData.MoveSpeed;
-        currentMight = charaterData.Might;
-        currentProjectileSpeed = charaterData.ProjectileSpeed;
-    }
+    //Spawned weapons
+    public List<GameObject> spawnedWeapons;
 
     //Experience and level of the player
     [Header("Experience/Level")]
@@ -44,6 +45,20 @@ public class PlayerStats : MonoBehaviour
     float invincibilityTimer;
     bool isInvincible = false;
 
+    private void Awake()
+    {
+        charaterData = CharacterSelector.GetData();
+        CharacterSelector.instance.DestroySingleton();//free resource
+
+        SpawnWeapon(charaterData.StartingWeapon);//set starting weapon
+
+        currentHealth = charaterData.MaxHealth;
+        currentRecovery = charaterData.Recovery;
+        currentMoveSpeed = charaterData.MoveSpeed;
+        currentMight = charaterData.Might;
+        currentProjectileSpeed = charaterData.ProjectileSpeed;
+        currentMagnet = charaterData.Magnet;
+    }
 
     void Start()
     {
@@ -60,6 +75,8 @@ public class PlayerStats : MonoBehaviour
         {
             isInvincible = false;
         }
+
+        PassiveRecovery();
     }
 
     public void IncreaseExperience(int amount)
@@ -115,7 +132,25 @@ public class PlayerStats : MonoBehaviour
     {
         currentHealth += restoreAmount;
 
-        if (currentHealth > charaterData.MaxHealth)
+        if (currentHealth > charaterData.MaxHealth)//TODO what happens if max health increases?
             currentHealth = charaterData.MaxHealth;
+    }
+
+    public void PassiveRecovery()
+    {
+        if (currentHealth < charaterData.MaxHealth)
+        {
+            currentHealth += currentRecovery * Time.deltaTime;
+
+            if (currentHealth > charaterData.MaxHealth)
+                currentHealth = charaterData.MaxHealth;
+        }
+    }
+
+    public void SpawnWeapon(GameObject weapon)
+    {
+        GameObject spawnedWeapon = Instantiate(weapon, transform.position, Quaternion.identity);
+        spawnedWeapon.transform.SetParent(transform);//player's child object
+        spawnedWeapons.Add(spawnedWeapon);
     }
 }

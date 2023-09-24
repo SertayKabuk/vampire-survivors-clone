@@ -22,7 +22,7 @@ public class MapController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerMovement = FindObjectOfType<PlayerMovement>();
+        playerMovement = FindAnyObjectByType<PlayerMovement>();
         spawnedChunks = new List<GameObject>();
     }
 
