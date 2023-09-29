@@ -16,7 +16,7 @@ public class GarlicBehaviour : MeleeWeaponBehaviour
         if (collision.CompareTag(Enums.Tags.Enemy.ToString()) && !markedEnemies.Contains(collision.gameObject))//move to tag enum
         {
             EnemyStats enemy = collision.GetComponent<EnemyStats>();
-            enemy.TakeDamage(currentDamage);//allow modification to damage
+            enemy.TakeDamage(GetCurrentDamage());//allow modification to damage
 
             markedEnemies.Add(collision.gameObject); //marked enemy to prevent damage same enemy more tahn once
         }
@@ -24,7 +24,7 @@ public class GarlicBehaviour : MeleeWeaponBehaviour
         {
             if (collision.TryGetComponent<BreakableProps>(out var prop))
             {
-                prop.TakeDamage(currentDamage);
+                prop.TakeDamage(GetCurrentDamage());
                 markedEnemies.Add(collision.gameObject); //marked enemy to prevent damage same enemy more tahn once
             }
         }

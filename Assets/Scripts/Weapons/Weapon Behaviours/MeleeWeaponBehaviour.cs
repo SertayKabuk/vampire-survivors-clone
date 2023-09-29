@@ -6,6 +6,7 @@ public class MeleeWeaponBehaviour : MonoBehaviour
 {
     public WeaponScriptableObject weaponData;
     public float destroyAfterSeconds;
+    PlayerStats player;
 
     //Current stats
     protected float currentDamage;
@@ -15,6 +16,7 @@ public class MeleeWeaponBehaviour : MonoBehaviour
 
     private void Awake()
     {
+        player = FindAnyObjectByType<PlayerStats>();
         currentDamage = weaponData.Damage;
         currentSpeed = weaponData.Speed;
         currentCooldownDuration = weaponData.CooldownDuration;
@@ -33,14 +35,19 @@ public class MeleeWeaponBehaviour : MonoBehaviour
         if (collision.CompareTag(Enums.Tags.Enemy.ToString()))
         {
             EnemyStats enemy = collision.GetComponent<EnemyStats>();
-            enemy.TakeDamage(currentDamage);//allow modification to damage
+            enemy.TakeDamage(GetCurrentDamage());//allow modification to damage
         }
         else if (collision.CompareTag(Enums.Tags.Prop.ToString()))
         {
             if (collision.TryGetComponent<BreakableProps>(out var prop))
             {
-                prop.TakeDamage(currentDamage);
+                prop.TakeDamage(GetCurrentDamage());
             }
         }
+    }
+
+    protected float GetCurrentDamage()
+    {
+        return currentDamage *= player.currentMight;
     }
 }

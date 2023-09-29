@@ -8,6 +8,7 @@ public class ProjectileWeaponBehaviour : MonoBehaviour
     public WeaponScriptableObject weaponData;
     protected Vector3 direction;
     public float destroyAfterSeconds;
+    PlayerStats player;
 
     //Current stats
     protected float currentDamage;
@@ -17,6 +18,7 @@ public class ProjectileWeaponBehaviour : MonoBehaviour
 
     private void Awake()
     {
+        player = FindAnyObjectByType<PlayerStats>();
         currentDamage = weaponData.Damage;
         currentSpeed = weaponData.Speed;
         currentCooldownDuration = weaponData.CooldownDuration;
@@ -83,25 +85,29 @@ public class ProjectileWeaponBehaviour : MonoBehaviour
         if (collision.CompareTag(Enums.Tags.Enemy.ToString()))
         {
             EnemyStats enemy = collision.GetComponent<EnemyStats>();
-            enemy.TakeDamage(currentDamage);//allow modification to damage
+            enemy.TakeDamage(GetCurrentDamage());//allow modification to damage
             ReducePierce();
         }
         else if (collision.CompareTag(Enums.Tags.Prop.ToString()))
         {
             if (collision.TryGetComponent<BreakableProps>(out var prop))
             {
-                prop.TakeDamage(currentDamage);
+                prop.TakeDamage(GetCurrentDamage());
                 ReducePierce();
             }
         }
 
     }
-
     private void ReducePierce()
     {
         currentPierce--;
 
         if (currentPierce <= 0)
             Destroy(gameObject);
+    }
+
+    protected float GetCurrentDamage()
+    {
+        return currentDamage *= player.currentMight;
     }
 }
